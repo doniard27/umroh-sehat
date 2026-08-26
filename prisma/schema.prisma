@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  name      String     @default("Admin")
+  role      String     @default("SUPER_ADMIN") // SUPER_ADMIN, ADMIN, EDITOR, CS
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  logs      AdminLog[]
+}
+
+model Package {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  departureDate DateTime
+  durationDays  Int
+  price         Int
+  status        String   @default("AVAILABLE")
+  seatsLeft     Int      @default(0)
+  badge         String   @default("")
+  imageUrl      String   @default("")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Article {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  category  String
+  excerpt   String
+  content   String
+  imageUrl  String   @default("")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  city      String
+  rating    Int      @default(5)
+  text      String
+  avatarUrl String   @default("")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  caption   String   @default("")
+  isCover   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Enquiry {
+  id        String   @id @default(cuid())
+  name      String
+  whatsapp  String
+  email     String
+  message   String
+  consent   Boolean  @default(false)
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String @default("")
+}
+
+model AdminLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  detail    String   @default("")
+  ipAddress String   @default("")
+  userAgent String   @default("")
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}

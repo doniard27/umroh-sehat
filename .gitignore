@@ -42,3 +42,11 @@ prisma/migrations/
 # uploads
 public/uploads/*
 !public/uploads/.gitkeep
+
+# database sqlite (folder)
+prisma/prisma/
+# helper scripts lokal
+/fix_useclient.py
+/ganti_icon.py
+/isi_konten.py
+/kie_generate.py

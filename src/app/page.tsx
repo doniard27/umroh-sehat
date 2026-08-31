@@ -20,6 +20,8 @@ export default async function Home() {
   const settings = await getAllSettings();
   
   const whatsappNumber = settings.whatsapp_number || settings.whatsappNumber || '6281234567890';
+  const brandName = settings.brand_name || settings.brandName || 'Umroh Sehat';
+  const logoUrl = settings.logo_url || settings.logoUrl || '';
   const heroHeadline = settings.hero_title || settings.heroHeadline || 'Umroh Sehat, Ibadah Khusyuk & Tenang';
   const heroSubheadline = settings.hero_subtitle || settings.heroSubheadline || 'Biro umroh terpercaya — berangkat dengan nyaman, kembali dengan ketenangan';
   const googleRating = settings.google_rating || settings.googleRating || '4.9';
@@ -71,7 +73,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      <Header whatsappNumber={whatsappNumber} />
+      <Header whatsappNumber={whatsappNumber} brandName={brandName} logoUrl={logoUrl} />
       
       <Hero 
         headline={heroHeadline}

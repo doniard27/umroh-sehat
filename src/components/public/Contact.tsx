@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle2, AlertCircle, MessageCircle } from 'lucide-react';
 
 interface ContactProps {
   address: string;
@@ -287,7 +287,7 @@ export default function Contact({ address, phone, email, hours, whatsappNumber }
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 bg-[#C9A227] hover:bg-[#b08d20] text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-md text-sm"
               >
-                <span>💬</span> Chat WhatsApp Langsung
+                <MessageCircle className="w-5 h-5" /> Chat WhatsApp Langsung
               </a>
             </div>
           </div>

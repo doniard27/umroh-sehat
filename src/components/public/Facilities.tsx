@@ -1,8 +1,34 @@
+import {
+  Ticket, BadgeCheck, Hotel, GraduationCap, UtensilsCrossed,
+  Backpack, Bus, Compass, Sparkles, Plane, Landmark, type LucideIcon,
+} from 'lucide-react';
+
 export interface FacilityItem {
   icon: string;
   title?: string;
   text?: string;
   desc?: string;
+}
+
+const facilityIcons: Record<string, LucideIcon> = {
+  '🎫': Ticket,
+  '🛂': BadgeCheck,
+  '🏨': Hotel,
+  '🎓': GraduationCap,
+  '🍽️': UtensilsCrossed,
+  '🍽': UtensilsCrossed,
+  '🎒': Backpack,
+  '🚌': Bus,
+  '🏙️': Compass,
+  '🏙': Compass,
+  '✈️': Plane,
+  '🕋': Landmark,
+  '🕌': Landmark,
+};
+
+function FacilityIcon({ icon }: { icon: string }) {
+  const IconCmp = facilityIcons[icon] || Sparkles;
+  return <IconCmp className="w-6 h-6 text-[#0B6E4F]" />;
 }
 
 interface FacilitiesProps {
@@ -59,8 +85,8 @@ export default function Facilities({
                 key={idx} 
                 className="bg-white p-6 rounded-2xl shadow-xs hover:shadow-md border border-gray-100/80 text-center flex flex-col items-center justify-start gap-3.5 hover:-translate-y-1 transition-all duration-300 group"
               >
-                <div className="w-14 h-14 bg-[#FAF7F0] group-hover:bg-[#0B6E4F]/10 rounded-2xl flex items-center justify-center text-3xl transition-colors shrink-0 shadow-inner">
-                  {fac.icon || "✨"}
+                <div className="w-14 h-14 bg-[#FAF7F0] group-hover:bg-[#0B6E4F]/10 rounded-2xl flex items-center justify-center transition-colors shrink-0 shadow-inner">
+                  <FacilityIcon icon={fac.icon || ''} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 text-base mb-1 group-hover:text-[#0B6E4F] transition-colors">

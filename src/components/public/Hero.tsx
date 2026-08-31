@@ -1,3 +1,4 @@
+import { Landmark, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
 interface HeroProps {
@@ -61,7 +62,7 @@ export default function Hero({
               href="#paket" 
               className="w-full sm:w-auto bg-[#C9A227] hover:bg-[#b08d20] text-white px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-0.5 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2 text-base md:text-lg"
             >
-              <span>🕋</span>
+              <Landmark className="w-5 h-5" />
               <span>Lihat Paket Umroh</span>
             </Link>
             <a 
@@ -70,7 +71,7 @@ export default function Hero({
               rel="noopener noreferrer"
               className="w-full sm:w-auto bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/40 text-white px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center gap-2 text-base md:text-lg"
             >
-              <span>💬</span>
+              <MessageCircle className="w-5 h-5" />
               <span>Konsultasi &amp; Daftar</span>
             </a>
           </div>

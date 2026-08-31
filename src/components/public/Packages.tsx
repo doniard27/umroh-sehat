@@ -1,4 +1,5 @@
 'use client';
+import { CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 
 interface Package {
@@ -69,7 +70,7 @@ export default function Packages({ packages, whatsappNumber }: PackagesProps) {
                 
                 <div className="flex flex-col gap-2 mb-4 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
-                    <span>📅</span>
+                    <CalendarDays className="w-4 h-4" />
                     <span>{formatDate(pkg.departureDate)} ({pkg.durationDays} Hari)</span>
                   </div>
                 </div>

@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 interface Testimonial {
   id: string;
   name: string;
@@ -45,7 +46,7 @@ export default function Testimonials({ testimonials, googleRating }: Testimonial
               
               <div className="flex text-[#C9A227] mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i}>{i < testi.rating ? '★' : '☆'}</span>
+                  <Star key={i} className={`w-4 h-4 ${i < testi.rating ? 'fill-[#C9A227]' : 'fill-transparent'}`} />
                 ))}
               </div>
               

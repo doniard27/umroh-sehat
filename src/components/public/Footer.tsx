@@ -1,3 +1,4 @@
+import { Landmark, MapPin, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
 
 interface FooterProps {
@@ -21,7 +22,7 @@ export default function Footer({ settings }: FooterProps) {
           {/* Column 1: Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-6 group">
-              <span className="text-3xl text-white">🕌</span>
+              <Landmark className="w-8 h-8 text-white" />
               <span className="font-serif text-2xl font-bold text-white group-hover:text-[#C9A227] transition-colors">
                 Umroh Sehat
               </span>
@@ -86,15 +87,15 @@ export default function Footer({ settings }: FooterProps) {
             <h4 className="font-serif text-xl font-bold mb-6 text-[#C9A227]">Kontak</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-green-50">
-                <span className="mt-1">📍</span>
+                <MapPin className="w-4 h-4 mt-1 shrink-0" />
                 <span className="whitespace-pre-line">{settings.address || "Jakarta, Indonesia"}</span>
               </li>
               <li className="flex items-start gap-3 text-green-50">
-                <span className="mt-1">📞</span>
+                <Phone className="w-4 h-4 mt-1 shrink-0" />
                 <span>{settings.phone || "-"}</span>
               </li>
               <li className="flex items-start gap-3 text-green-50">
-                <span className="mt-1">✉️</span>
+                <Mail className="w-4 h-4 mt-1 shrink-0" />
                 <span>{settings.email || "-"}</span>
               </li>
             </ul>

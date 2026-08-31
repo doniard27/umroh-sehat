@@ -1,3 +1,4 @@
+import { Target, Rocket } from 'lucide-react';
 interface AboutProps {
   visi: string;
   misi: string;
@@ -29,7 +30,7 @@ export default function About({ visi, misi }: AboutProps) {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-[#C9A227]">🎯</span> Visi Kami
+                  <Target className="w-5 h-5 text-[#C9A227]" /> Visi Kami
                 </h3>
                 <p className="text-gray-600 leading-relaxed bg-[#FAF7F0] p-4 rounded-xl border-l-4 border-[#0B6E4F]">
                   {visi}
@@ -38,7 +39,7 @@ export default function About({ visi, misi }: AboutProps) {
               
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-[#C9A227]">🚀</span> Misi Kami
+                  <Rocket className="w-5 h-5 text-[#C9A227]" /> Misi Kami
                 </h3>
                 <div className="text-gray-600 leading-relaxed bg-[#FAF7F0] p-4 rounded-xl border-l-4 border-[#0B6E4F] whitespace-pre-line">
                   {misi}

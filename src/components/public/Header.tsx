@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, Landmark } from 'lucide-react';
 
 interface HeaderProps {
   whatsappNumber: string;
+  brandName?: string;
+  logoUrl?: string;
 }
 
-export default function Header({ whatsappNumber }: HeaderProps) {
+export default function Header({ whatsappNumber, brandName = 'Umroh Sehat', logoUrl = '' }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -39,9 +41,21 @@ export default function Header({ whatsappNumber }: HeaderProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-2xl text-[#0B6E4F]">🕌</span>
+            {logoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logoUrl}
+                alt={brandName}
+                className="h-10 w-auto object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            ) : (
+              <Landmark className="w-7 h-7 text-[#0B6E4F]" />
+            )}
             <span className="font-serif text-xl md:text-2xl font-bold text-[#0B6E4F] group-hover:text-green-800 transition-colors">
-              Umroh Sehat
+              {brandName}
             </span>
           </Link>
 

@@ -8,7 +8,21 @@ import FloatingWhatsApp from '@/components/public/FloatingWhatsApp';
 export const metadata = {
   title: 'Kebijakan Privasi - Umroh Sehat',
   description: 'Kebijakan Privasi dan Perlindungan Data Pelanggan Umroh Sehat.',
+  alternates: {
+    canonical: '/kebijakan-privasi',
+  },
+  openGraph: {
+    title: 'Kebijakan Privasi - Umroh Sehat',
+    description: 'Kebijakan Privasi dan Perlindungan Data Pelanggan Umroh Sehat.',
+    type: 'website',
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://umrohsehat.my.id'}/kebijakan-privasi`,
+    siteName: 'Umroh Sehat',
+    locale: 'id_ID',
+    images: [{ url: '/images/og-image.png', width: 1200, height: 630 }],
+  },
 };
+
+export const revalidate = 60;
 
 export default async function KebijakanPrivasiPage() {
   const settings = await getAllSettings();

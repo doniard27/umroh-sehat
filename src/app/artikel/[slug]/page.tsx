@@ -1,28 +1,57 @@
 import prisma from '@/lib/prisma';
 import { getAllSettings } from '@/lib/settings';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Header from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import FloatingWhatsApp from '@/components/public/FloatingWhatsApp';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 function formatDate(date: string | Date) {
   return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://umrohsehat.my.id";
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const article = await prisma.article.findUnique({
     where: { slug: params.slug }
   });
   
   if (!article) return { title: 'Artikel Tidak Ditemukan - Umroh Sehat' };
   
+  const url = `${SITE_URL}/artikel/${article.slug}`;
+  const image = article.imageUrl?.startsWith('http')
+    ? article.imageUrl
+    : article.imageUrl
+      ? `${SITE_URL}${article.imageUrl}`
+      : `${SITE_URL}/images/og-image.png`;
+
   return {
-    title: `${article.title} - Umroh Sehat`,
+    title: article.title,
     description: article.excerpt,
+    alternates: { canonical: `/artikel/${article.slug}` },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: 'article',
+      url,
+      siteName: 'Umroh Sehat',
+      locale: 'id_ID',
+      publishedTime: article.createdAt.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+      authors: ['Umroh Sehat'],
+      images: [{ url: image, width: 1200, height: 630, alt: article.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: [image],
+    },
   };
 }
 
@@ -49,6 +78,28 @@ export default async function ArticleDetailPage({ params }: { params: { slug: st
 
   return (
     <main className="min-h-screen flex flex-col bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: article.title,
+            description: article.excerpt,
+            image: article.imageUrl
+              ? article.imageUrl.startsWith('http')
+                ? article.imageUrl
+                : `${SITE_URL}${article.imageUrl}`
+              : `${SITE_URL}/images/og-image.png`,
+            datePublished: article.createdAt.toISOString(),
+            dateModified: article.updatedAt.toISOString(),
+            author: { '@type': 'Organization', name: 'Umroh Sehat', url: SITE_URL },
+            publisher: { '@type': 'Organization', name: 'Umroh Sehat', logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/logo.png` } },
+            mainEntityOfPage: `${SITE_URL}/artikel/${article.slug}`,
+            inLanguage: 'id-ID',
+          }),
+        }}
+      />
       <Header whatsappNumber={whatsappNumber} />
       
       <div className="pt-32 pb-20 flex-grow container mx-auto px-4 max-w-7xl">

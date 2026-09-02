@@ -14,7 +14,7 @@ import Contact from '@/components/public/Contact';
 import Footer from '@/components/public/Footer';
 import FloatingWhatsApp from '@/components/public/FloatingWhatsApp';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home() {
   const settings = await getAllSettings();
@@ -120,7 +120,7 @@ export default async function Home() {
         whatsappNumber={whatsappNumber}
       />
       
-      <Footer settings={settings} />
+      <Footer settings={settings} logoUrl={logoUrl} />
       
       <FloatingWhatsApp 
         whatsappNumber={settings.floating_wa_number || whatsappNumber}

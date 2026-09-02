@@ -11,9 +11,10 @@ interface FooterProps {
     youtubeUrl?: string;
     tiktokUrl?: string;
   };
+  logoUrl?: string;
 }
 
-export default function Footer({ settings }: FooterProps) {
+export default function Footer({ settings, logoUrl = '' }: FooterProps) {
   return (
     <footer className="bg-[#0B6E4F] text-white pt-16 pb-8 border-t-4 border-[#C9A227]">
       <div className="container mx-auto px-4">
@@ -22,7 +23,16 @@ export default function Footer({ settings }: FooterProps) {
           {/* Column 1: Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-6 group">
-              <Landmark className="w-8 h-8 text-white" />
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logoUrl}
+                  alt="Umroh Sehat"
+                  className="h-8 w-auto object-contain"
+                />
+              ) : (
+                <Landmark className="w-8 h-8 text-white" />
+              )}
               <span className="font-serif text-2xl font-bold text-white group-hover:text-[#C9A227] transition-colors">
                 Umroh Sehat
               </span>
@@ -105,7 +115,7 @@ export default function Footer({ settings }: FooterProps) {
 
         <div className="border-t border-white/20 pt-8 mt-8 text-center text-sm text-green-100 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} Umroh Sehat. Hak Cipta Dilindungi.</p>
-          <p>Powered by <a href="#" className="hover:text-white font-medium">Antigravity</a></p>
+          <p>Powered by <a href="#" className="hover:text-white font-medium">Digital Magnetix</a></p>
         </div>
       </div>
     </footer>

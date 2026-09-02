@@ -102,7 +102,8 @@ export default function Sidebar({ unreadCount: initialUnread = 0, userName: init
             {isOpen ? <X className="w-6 h-6 text-primary-700" /> : <Menu className="w-6 h-6 text-primary-700" />}
           </button>
           <div className="flex items-center gap-2">
-            <span className="text-xl">🕌</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo.png" alt="Umroh Sehat" className="h-8 w-auto object-contain" />
             <span className="font-serif font-bold text-gray-900 text-lg">Umroh Sehat</span>
           </div>
         </div>
@@ -133,9 +134,8 @@ export default function Sidebar({ unreadCount: initialUnread = 0, userName: init
         {/* Brand Header */}
         <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
           <Link href="/admin" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-[#0B6E4F]/10 border border-[#0B6E4F]/20 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition-transform">
-              🕌
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo.png" alt="Umroh Sehat" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform" />
             <div>
               <h2 className="font-serif font-bold text-gray-900 text-lg leading-tight">Umroh Sehat</h2>
               <p className="text-[11px] text-gray-400 font-medium tracking-wide">CMS MANAGEMENT</p>

@@ -51,6 +51,8 @@ interface SettingsForm {
   floating_wa_tooltip: string;
   floating_wa_position: string;
   floating_wa_enabled: string;
+  meta_pixel_id: string;
+  google_ads_id: string;
   visi: string;
   misi: string;
   [key: string]: string;
@@ -84,6 +86,8 @@ const defaultSettings: SettingsForm = {
   floating_wa_tooltip: "Chat CS Kami",
   floating_wa_position: "bottom-right",
   floating_wa_enabled: "true",
+  meta_pixel_id: "",
+  google_ads_id: "",
   visi: "",
   misi: "",
 };
@@ -651,6 +655,43 @@ export default function PengaturanPage() {
                 onChange={(e) => handleChange("license_badge", e.target.value)}
                 placeholder="PPIU RESMI • BERIZIN KEMENAG"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Pixel & Tracking (Meta Pixel + Google Ads) */}
+        <div className="admin-card">
+          <h2 className="text-lg font-semibold mb-4 pb-2 border-b text-gray-800">📈 Pixel &amp; Tracking (Meta Pixel + Google Ads)</h2>
+          <p className="text-xs text-gray-500 mb-4">
+            Tempel ID pixel/tag Anda di sini — script otomatis terpasang di semua halaman website.
+            Kosongkan kolom untuk menonaktifkan.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="admin-label">Meta Pixel ID (Facebook)</label>
+              <input
+                type="text"
+                className="admin-input font-mono"
+                value={form.meta_pixel_id}
+                onChange={(e) => handleChange("meta_pixel_id", e.target.value)}
+                placeholder="Contoh: 123456789012345"
+              />
+              <p className="text-[11px] text-gray-400 mt-1">
+                Ambil di Meta Events Manager → Data Sources → Settings → Pixel ID (angka saja)
+              </p>
+            </div>
+            <div>
+              <label className="admin-label">Google Ads Conversion ID</label>
+              <input
+                type="text"
+                className="admin-input font-mono"
+                value={form.google_ads_id}
+                onChange={(e) => handleChange("google_ads_id", e.target.value)}
+                placeholder="Contoh: AW-123456789"
+              />
+              <p className="text-[11px] text-gray-400 mt-1">
+                Ambil di Google Ads → Tools → Conversions → Web → Tag setup (format AW-XXXXXXXXX)
+              </p>
             </div>
           </div>
         </div>

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('admin@umrohsehat.com');
-  const [password, setPassword] = useState('umrohsehat123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -42,8 +42,9 @@ export default function LoginPage() {
 
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 space-y-6 relative z-10 border border-gray-100">
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-2 text-3xl shadow-sm border border-primary-100">
-            🕌
+          <div className="flex items-center justify-center mx-auto mb-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo.png" alt="Umroh Sehat" className="h-16 w-auto object-contain" />
           </div>
           <h1 className="text-2xl font-bold font-serif text-gray-900">Umroh Sehat</h1>
           <p className="text-sm text-gray-500">Panel Manajemen Konten & Operasional</p>
@@ -114,7 +115,7 @@ export default function LoginPage() {
 
         <div className="pt-2 text-center">
           <p className="text-xs text-gray-400">
-            Akun default: <code className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600">admin@umrohsehat.com</code>
+            Hubungi administrator jika lupa password.
           </p>
         </div>
       </div>

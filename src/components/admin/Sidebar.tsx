@@ -129,7 +129,7 @@ export default function Sidebar({ unreadCount: initialUnread = 0, userName: init
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 ease-in-out shadow-sm
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:translate-x-0 md:static md:h-screen md:sticky md:top-0
+        md:translate-x-0
       `}>
         {/* Brand Header */}
         <div className="p-5 border-b border-gray-100 flex items-center justify-between bg-white">

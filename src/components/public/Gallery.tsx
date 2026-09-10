@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Images } from 'lucide-react';
+import Link from 'next/link';
 
 interface GalleryImage {
   id: string;
@@ -11,20 +12,24 @@ interface GalleryImage {
 
 interface GalleryProps {
   images: GalleryImage[];
+  showAllLink?: boolean;
+  hideHeader?: boolean;
 }
 
-export default function Gallery({ images }: GalleryProps) {
+export default function Gallery({ images, showAllLink = false, hideHeader = false }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   if (!images || images.length === 0) return null;
 
   return (
-    <section id="galeri" className="py-20 bg-white">
+    <section id="galeri" className={`py-20 ${hideHeader ? '' : 'bg-white'}`}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Galeri</h2>
-          <div className="w-24 h-1 bg-[#0B6E4F] mx-auto rounded-full"></div>
-        </div>
+        {!hideHeader && (
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Galeri</h2>
+            <div className="w-24 h-1 bg-[#0B6E4F] mx-auto rounded-full"></div>
+          </div>
+        )}
 
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 max-w-7xl mx-auto masonry-grid">
           {images.map((image, index) => {
@@ -35,11 +40,11 @@ export default function Gallery({ images }: GalleryProps) {
                 className="break-inside-avoid cursor-pointer overflow-hidden rounded-xl group masonry-grid-item relative"
                 onClick={() => setSelectedImage(image)}
               >
-                <div className="bg-gray-100 aspect-[4/3] w-full relative overflow-hidden">
+                <div className="bg-gray-100 w-full relative overflow-hidden">
                   <img 
                     src={image.imageUrl || defaultImg} 
                     alt={image.caption || "Galeri Umroh Sehat"} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
                       e.currentTarget.src = defaultImg;
                     }}
@@ -52,6 +57,18 @@ export default function Gallery({ images }: GalleryProps) {
             );
           })}
         </div>
+
+        {showAllLink && (
+          <div className="text-center mt-12">
+            <Link
+              href="/galeri"
+              className="inline-flex items-center gap-2 bg-[#0B6E4F] hover:bg-green-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-colors"
+            >
+              <Images className="w-5 h-5" />
+              Lihat Semua Foto Galeri
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Lightbox Modal */}

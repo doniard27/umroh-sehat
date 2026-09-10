@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Header from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import FloatingWhatsApp from '@/components/public/FloatingWhatsApp';
+import CategoryBadge from '@/components/public/CategoryBadge';
 
 interface Package {
   id: string;
@@ -15,9 +16,12 @@ interface Package {
   seatsLeft: number;
   status: string;
   badge?: string;
+  category?: string;
   description: string;
   imageUrl?: string;
 }
+
+type CategoryFilter = 'SEMUA' | 'HEMAT' | 'REGULER' | 'PREMIUM';
 
 function formatDate(date: string | Date) {
   return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -31,11 +35,12 @@ export default function PaketUmrohPage() {
   const [packages, setPackages] = useState<Package[]>([]);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<CategoryFilter>('SEMUA');
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/admin/packages').then(r => r.ok ? r.json() : []).catch(() => []),
-      fetch('/api/admin/settings').then(r => r.ok ? r.json() : {}).catch(() => {})
+      fetch('/api/packages').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('/api/settings').then(r => r.ok ? r.json() : {}).catch(() => {})
     ]).then(([pkgs, setts]) => {
       setPackages(Array.isArray(pkgs) ? pkgs : []);
       setSettings(setts || {});
@@ -44,6 +49,9 @@ export default function PaketUmrohPage() {
   }, []);
 
   const whatsappNumber = settings.whatsapp_number || settings.whatsappNumber || '6281234567890';
+  const filteredPackages = filter === 'SEMUA'
+    ? packages
+    : packages.filter((p) => (p.category || 'REGULER').toUpperCase() === filter);
 
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F0]">
@@ -65,6 +73,29 @@ export default function PaketUmrohPage() {
           </p>
         </div>
 
+        {/* Filter Kategori */}
+        {!loading && packages.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+            {(['SEMUA', 'HEMAT', 'REGULER', 'PREMIUM'] as CategoryFilter[]).map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                  filter === f
+                    ? f === 'HEMAT'
+                      ? 'bg-[#C9A227] text-white shadow-md'
+                      : f === 'PREMIUM'
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-[#0B6E4F] text-white shadow-md'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-[#0B6E4F]/40'
+                }`}
+              >
+                {f === 'SEMUA' ? 'Semua Paket' : f === 'HEMAT' ? '💸 Hemat' : f === 'REGULER' ? '🕋 Reguler' : '👑 Premium'}
+              </button>
+            ))}
+          </div>
+        )}
+
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {[1, 2, 3].map(i => (
@@ -73,9 +104,9 @@ export default function PaketUmrohPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {packages.map((pkg) => (
+            {filteredPackages.map((pkg) => (
               <div key={pkg.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col">
-                <div className="relative h-60 bg-gradient-to-br from-[#0B6E4F] to-green-700 flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-[4/5] bg-gradient-to-br from-[#0B6E4F] to-green-700 flex items-center justify-center overflow-hidden">
                   <img 
                     src={pkg.imageUrl || '/images/package-default.jpg'} 
                     alt={pkg.title} 
@@ -84,6 +115,9 @@ export default function PaketUmrohPage() {
                       e.currentTarget.src = '/images/package-default.jpg';
                     }}
                   />
+                  <div className="absolute top-4 left-4">
+                    <CategoryBadge category={pkg.category} />
+                  </div>
                   <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
                     {pkg.badge && (
                       <span className="bg-[#C9A227] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
@@ -116,14 +150,12 @@ export default function PaketUmrohPage() {
                     <div className="text-[#C9A227] font-bold text-2xl mb-4">
                       {formatPrice(pkg.price)}
                     </div>
-                    <a
-                      href={`https://wa.me/${whatsappNumber.replace(/^0/, '62')}?text=${encodeURIComponent(`Assalamu'alaikum, saya tertarik dengan paket ${pkg.title}`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/paket-umroh/${pkg.id}`}
                       className="block w-full text-center bg-[#0B6E4F] hover:bg-green-800 text-white py-3 rounded-xl font-bold transition-colors"
                     >
                       SELENGKAPNYA
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

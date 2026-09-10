@@ -62,6 +62,21 @@ export const packageSchema = z.object({
     .string()
     .min(1, "Deskripsi paket wajib diisi")
     .max(5000, "Deskripsi maksimal 5000 karakter"),
+  details: z
+    .string()
+    .max(20000, "Detail maksimal 20000 karakter")
+    .optional()
+    .default(""),
+  category: z
+    .string()
+    .refine((v) => ["HEMAT", "REGULER", "PREMIUM"].includes(v), "Kategori paket tidak valid")
+    .optional()
+    .default("REGULER"),
+  facilities: z
+    .string()
+    .max(20000, "Fasilitas maksimal 20000 karakter")
+    .optional()
+    .default(""),
   departureDate: z.string().min(1, "Tanggal keberangkatan wajib diisi"),
   durationDays: z
     .number({ invalid_type_error: "Durasi harus berupa angka" })

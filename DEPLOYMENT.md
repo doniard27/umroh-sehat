@@ -207,14 +207,16 @@ Website Anda kini aktif di **`https://domainanda.com`** dengan enkripsi SSL resm
 
 ---
 
-## 7. Akun Admin Default & Keamanan
+## 7. Akun Admin & Keamanan
 
-Setelah database di-seed, akun login bawaan adalah:
-- **URL Admin**: `https://domainanda.com/admin/login`
-- **Email**: `admin@umrohsehat.com`
-- **Password**: `umrohsehat123`
+Setelah database di-seed, akun admin pertama menggunakan email `admin@umrohsehat.com`.
 
-> ⚠️ **PENTING**: Segera masuk ke menu **Profil Admin (`/admin/profil`)** setelah deployment pertama kali untuk mengubah password default dengan password yang kuat dan aman.
+> ⚠️ **PENTING — WAJIB DILAKUKAN SEBELUM GO-LIVE:**
+> 1. Login pertama kali, lalu **SEGERA ganti password** di menu **Profil Admin (`/admin/profil`)** dengan password kuat (min. 12 karakter, kombinasi huruf besar/kecil & angka).
+> 2. Jangan pernah menuliskan password di dokumentasi, repo publik, atau chat.
+> 3. Jangan biarkan form login terisi otomatis — pastikan form login selalu kosong.
+> 4. Aktifkan rate limit login (sudah bawaan aplikasi: 5 percobaan gagal → terkunci sementara).
+> 5. Untuk produksi, gunakan HTTPS + reverse proxy (Nginx/Cloudflare) dan batasi akses `/admin/` bila memungkinkan.
 
 ---
 

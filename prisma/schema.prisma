@@ -22,6 +22,9 @@ model Package {
   id            String   @id @default(cuid())
   title         String
   description   String
+  details       String   @default("")
+  category      String   @default("REGULER")
+  facilities    String   @default("")
   departureDate DateTime
   durationDays  Int
   price         Int

@@ -68,8 +68,17 @@ export default async function Home() {
   });
 
   const galleryImages = await prisma.galleryImage.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: 'asc' },
   });
+
+  // Beranda: tampilkan sampel kecil (2 Cek Kesehatan + 2 Madinah + 4 Makkah)
+  const pickByFolder = (prefix: string, n: number) =>
+    galleryImages.filter((g) => g.imageUrl.includes(`/${prefix}_`)).slice(0, n);
+  const homeGallery = [
+    ...pickByFolder('cek_kesehatan', 2),
+    ...pickByFolder('di-madinah', 2),
+    ...pickByFolder('di-makkah', 4),
+  ];
 
   return (
     <main className="min-h-screen">
@@ -103,7 +112,7 @@ export default async function Home() {
         misi={companyMisi} 
       />
       
-      <Gallery images={galleryImages} />
+      <Gallery images={homeGallery} showAllLink />
       
       <Testimonials 
         testimonials={testimonials} 

@@ -26,7 +26,7 @@ export default function Header({ whatsappNumber, brandName = 'Umroh Sehat', logo
     { name: 'Beranda', href: '/#beranda' },
     { name: 'Tentang Kami', href: '/#tentang' },
     { name: 'Paket Umroh', href: '/#paket' },
-    { name: 'Galeri', href: '/#galeri' },
+    { name: 'Galeri', href: '/galeri' },
     { name: 'Testimoni', href: '/#testimoni' },
     { name: 'Artikel', href: '/#artikel' },
     { name: 'Kontak', href: '/#kontak' },

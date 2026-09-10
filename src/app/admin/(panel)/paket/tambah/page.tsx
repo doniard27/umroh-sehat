@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import ImageUpload from '@/components/admin/ImageUpload';
+import ImageUpload from "@/components/admin/ImageUpload";
+import FacilitiesEditor, { FacilityItem } from "@/components/admin/FacilitiesEditor";
 import AdminHeader from '@/components/admin/AdminHeader';
 
 export default function TambahPaket() {
@@ -16,6 +17,8 @@ export default function TambahPaket() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    details: '',
+    category: 'REGULER' as 'HEMAT' | 'REGULER' | 'PREMIUM',
     departureDate: '',
     durationDays: '',
     price: '',
@@ -25,6 +28,7 @@ export default function TambahPaket() {
     published: true,
     imageUrl: ''
   });
+  const [facilities, setFacilities] = useState<FacilityItem[]>([]);
 
   useEffect(() => {
     fetch('/api/csrf')
@@ -56,7 +60,8 @@ export default function TambahPaket() {
           ...formData,
           durationDays: parseInt(formData.durationDays) || 0,
           price: parseInt(formData.price) || 0,
-          seatsLeft: parseInt(formData.seatsLeft) || 0
+          seatsLeft: parseInt(formData.seatsLeft) || 0,
+          facilities: JSON.stringify(facilities)
         })
       });
 
@@ -104,6 +109,30 @@ export default function TambahPaket() {
                 />
               </div>
 
+              <div className="col-span-2 md:col-span-1">
+                <label className="admin-label">Kategori Paket</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {(['HEMAT', 'REGULER', 'PREMIUM'] as const).map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => handleChange({ target: { name: 'category', value: cat } } as any)}
+                      className={`p-2.5 rounded-xl border text-sm font-semibold transition-all ${
+                        formData.category === cat
+                          ? cat === 'HEMAT'
+                            ? 'border-[#C9A227] bg-amber-50 text-amber-700 ring-2 ring-[#C9A227]/30'
+                            : cat === 'REGULER'
+                              ? 'border-[#0B6E4F] bg-green-50 text-[#0B6E4F] ring-2 ring-[#0B6E4F]/30'
+                              : 'border-purple-500 bg-purple-50 text-purple-700 ring-2 ring-purple-500/30'
+                          : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {cat === 'HEMAT' ? '💸 Hemat' : cat === 'REGULER' ? '🕋 Reguler' : '👑 Premium'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="col-span-2">
                 <label className="admin-label">Deskripsi</label>
                 <textarea 
@@ -113,8 +142,25 @@ export default function TambahPaket() {
                   value={formData.description}
                   onChange={handleChange}
                   className="admin-input"
-                  placeholder="Penjelasan singkat paket..."
+                  placeholder="Penjelasan singkat paket (tampil di kartu & halaman detail)..."
                 ></textarea>
+              </div>
+
+              <div className="col-span-2">
+                <label className="admin-label">Penjelasan Lengkap / Itinerary (tampil di halaman detail)</label>
+                <textarea 
+                  name="details"
+                  rows={10}
+                  value={formData.details}
+                  onChange={handleChange}
+                  className="admin-input font-mono text-sm"
+                  placeholder={"Contoh:\nHari 1: Jakarta - Jeddah, terbang dengan maskapai...\nHari 2: Tiba di Madinah, ziarah...\n\nAtau tulis fasilitas lengkap, hotel, dan keunggulan paket ini."}
+                ></textarea>
+              </div>
+
+              <div className="col-span-2">
+                <label className="admin-label">Fasilitas Khusus Paket Ini</label>
+                <FacilitiesEditor value={facilities} onChange={setFacilities} />
               </div>
 
               <div>

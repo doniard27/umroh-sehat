@@ -1,6 +1,7 @@
 'use client';
 import { CalendarDays } from 'lucide-react';
 import Link from 'next/link';
+import CategoryBadge from '@/components/public/CategoryBadge';
 
 interface Package {
   id: string;
@@ -11,6 +12,7 @@ interface Package {
   seatsLeft: number;
   status: string;
   badge?: string;
+  category?: string;
   description: string;
   imageUrl?: string;
 }
@@ -40,7 +42,7 @@ export default function Packages({ packages, whatsappNumber }: PackagesProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {packages.map((pkg) => (
             <div key={pkg.id} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col">
-              <div className="relative h-60 bg-gradient-to-br from-[#0B6E4F] to-green-700 flex items-center justify-center overflow-hidden">
+              <div className="relative aspect-[4/5] bg-gradient-to-br from-[#0B6E4F] to-green-700 flex items-center justify-center overflow-hidden">
                 <img 
                   src={pkg.imageUrl || '/images/package-default.jpg'} 
                   alt={pkg.title} 
@@ -49,6 +51,9 @@ export default function Packages({ packages, whatsappNumber }: PackagesProps) {
                     e.currentTarget.src = '/images/package-default.jpg';
                   }}
                 />
+                <div className="absolute top-4 left-4">
+                  <CategoryBadge category={pkg.category} />
+                </div>
                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
                   {pkg.badge && (
                     <span className="bg-[#C9A227] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
@@ -81,14 +86,12 @@ export default function Packages({ packages, whatsappNumber }: PackagesProps) {
                   <div className="text-[#C9A227] font-bold text-2xl mb-4">
                     {formatPrice(pkg.price)}
                   </div>
-                  <a
-                    href={`https://wa.me/${whatsappNumber.replace(/^0/, '62')}?text=${encodeURIComponent(`Assalamu'alaikum, saya tertarik dengan paket ${pkg.title}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`/paket-umroh/${pkg.id}`}
                     className="block w-full text-center bg-[#0B6E4F] hover:bg-green-800 text-white py-3 rounded-xl font-bold transition-colors"
                   >
                     SELENGKAPNYA
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
